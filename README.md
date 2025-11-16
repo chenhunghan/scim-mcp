@@ -2,6 +2,16 @@
 
 Model Context Protocol (MCP) server for enterprise-ready user and group provisioning via SCIM (System for Cross-domain Identity Management) V2 protocol.
 
+## Demo
+
+On Vercel
+<https://scim-mcp.vercel.app/mcp>
+
+On Alpic
+<https://scim-mcp-d8a54d7b.alpic.live/>
+
+[![Deploy on Alpic](https://assets.alpic.ai/button.svg)](https://app.alpic.ai/new/clone?repositoryUrl=https://github.com/chenhunghan/scim-mcp)
+
 ## Setup
 
 ### Codex
