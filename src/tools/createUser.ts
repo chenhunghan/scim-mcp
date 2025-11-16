@@ -6,7 +6,7 @@ export const metadata: ToolMetadata = {
   name: "create-user",
   description: "Create a SCIM user resource",
   annotations: {
-    title: "Greet User Resource",
+    title: "Create User Resource",
     readOnlyHint: false,
     destructiveHint: false,
     idempotentHint: true,
