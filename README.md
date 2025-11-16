@@ -1,6 +1,6 @@
 # SCIM MCP Server
 
-Model Context Protocol (MCP) server for enterprise-ready user and group provisioning via SCIM V2 protocol.
+Model Context Protocol (MCP) server for enterprise-ready user and group provisioning via SCIM (System for Cross-domain Identity Management) V2 protocol.
 
 ## Setup
 
