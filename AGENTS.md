@@ -28,7 +28,6 @@ scim-mcp/
 ├── src/
 │   ├── tools/              # MCP tools (auto-discovered)
 │   │   ├── createUser.ts   # SCIM user creation tool
-│   │   ├── greet.ts        # Example greeting tool
 │   │   └── userResourceSchema.ts  # Shared Zod schema for SCIM User
 │   └── resources/          # MCP resources (auto-discovered)
 │       ├── (config)/
