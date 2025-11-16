@@ -1,0 +1,24 @@
+{
+  "name": "scim-mcp",
+  "version": "0.1.0",
+  "description": "An mcp implementation for SCIM protocol",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "xmcp build",
+    "dev": "xmcp dev",
+    "start": "node dist/stdio.js"
+  },
+  "dependencies": {
+    "xmcp": "^0.4.0",
+    "zod": "3.24.4"
+  },
+  "main": "./dist/stdio.js",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "scim-mcp": "./dist/stdio.js"
+  }
+}
