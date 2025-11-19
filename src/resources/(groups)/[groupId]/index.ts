@@ -4,6 +4,18 @@ import { z } from "zod";
 
 export const schema = {
   groupId: z.string().describe("The ID of the group"),
+  attributes: z
+    .string()
+    .optional()
+    .describe(
+      "Comma-separated list of attribute names to return. Per RFC 7644 Section 3.9, only specified attributes will be returned (e.g., 'displayName,members')"
+    ),
+  excludedAttributes: z
+    .string()
+    .optional()
+    .describe(
+      "Comma-separated list of attribute names to exclude from the response. Per RFC 7644 Section 3.9"
+    ),
 };
 
 export const metadata: ResourceMetadata = {
@@ -12,7 +24,11 @@ export const metadata: ResourceMetadata = {
   description: "Group Resource by ID",
 };
 
-export default async function handler({ groupId }: InferSchema<typeof schema>) {
+export default async function handler({
+  groupId,
+  attributes,
+  excludedAttributes,
+}: InferSchema<typeof schema>) {
   const requestHeaders = headers();
   const apiToken = requestHeaders["x-scim-api-key"];
   const baseUrl = requestHeaders["x-scim-base-url"];
@@ -25,7 +41,17 @@ export default async function handler({ groupId }: InferSchema<typeof schema>) {
     throw new Error("Missing required headers: x-scim-base-url");
   }
 
-  const response = await fetch(`${baseUrl}/Groups/${groupId}`, {
+  const url = new URL(`${baseUrl}/Groups/${groupId}`);
+
+  if (attributes) {
+    url.searchParams.append("attributes", attributes);
+  }
+
+  if (excludedAttributes) {
+    url.searchParams.append("excludedAttributes", excludedAttributes);
+  }
+
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/scim+json",
