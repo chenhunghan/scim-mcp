@@ -17,7 +17,7 @@ export const metadata: ToolMetadata = {
 
 export const schema = {
   groupId: z.string().describe("The unique identifier of the group to replace"),
-  ...groupResourceSchema,
+  ...z.object(groupResourceSchema).omit({ id: true, meta: true }).shape,
 };
 
 export default async function replaceGroup(

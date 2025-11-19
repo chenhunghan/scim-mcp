@@ -10,6 +10,22 @@ export const groupResourceSchema = {
     .describe(
       "An array of Strings containing URIs that are used to indicate the namespaces of the SCIM schemas"
     ),
+  id: z
+    .string()
+    .optional()
+    .describe(
+      "A unique identifier for a SCIM resource as defined by the service provider"
+    ),
+  meta: z
+    .object({
+      resourceType: z.string().optional(),
+      created: z.string().optional(),
+      lastModified: z.string().optional(),
+      location: z.string().optional(),
+      version: z.string().optional(),
+    })
+    .optional()
+    .describe("A complex attribute containing resource metadata"),
   displayName: z
     .string()
     .describe(

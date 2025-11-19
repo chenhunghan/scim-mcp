@@ -1,6 +1,7 @@
 import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { groupResourceSchema } from "../schemas/groupResourceSchema";
+import { z } from "zod";
 
 export const metadata: ToolMetadata = {
   name: "create-group",
@@ -14,7 +15,10 @@ export const metadata: ToolMetadata = {
   },
 };
 
-export const schema = groupResourceSchema;
+export const schema = z.object(groupResourceSchema).omit({
+  id: true,
+  meta: true,
+});
 
 export default async function createGroup(
   groupResource: InferSchema<typeof groupResourceSchema>

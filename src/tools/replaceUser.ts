@@ -17,7 +17,7 @@ export const metadata: ToolMetadata = {
 
 export const schema = {
   userId: z.string().describe("The unique identifier of the user to replace"),
-  ...userResourceSchema,
+  ...z.object(userResourceSchema).omit({ id: true, meta: true }).shape,
 };
 
 export default async function replaceUser(

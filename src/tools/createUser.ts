@@ -1,6 +1,7 @@
 import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { userResourceSchema } from "../schemas/userResourceSchema";
+import { z } from "zod";
 
 export const metadata: ToolMetadata = {
   name: "create-user",
@@ -14,7 +15,10 @@ export const metadata: ToolMetadata = {
   },
 };
 
-export const schema = userResourceSchema;
+export const schema = z.object(userResourceSchema).omit({
+  id: true,
+  meta: true,
+});
 
 export default async function createUser(
   userResource: InferSchema<typeof userResourceSchema>
