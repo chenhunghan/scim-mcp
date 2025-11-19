@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const metadata: ToolMetadata = {
   name: "add-user-to-group",
-  description: "Add a user to a group using SCIM PATCH operation",
+  description: "Add a user to a group",
   annotations: {
     title: "Add User to Group",
     readOnlyHint: false,
