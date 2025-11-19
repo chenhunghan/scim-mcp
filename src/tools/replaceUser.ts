@@ -1,0 +1,67 @@
+import { type InferSchema, type ToolMetadata } from "xmcp";
+import { headers } from "xmcp/headers";
+import { userResourceSchema } from "../schemas/userResourceSchema";
+import { z } from "zod";
+
+export const metadata: ToolMetadata = {
+  name: "replace-user",
+  description: "Replace a user resource",
+  annotations: {
+    title: "Replace User Resource",
+    readOnlyHint: false,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+  },
+};
+
+export const schema = {
+  userId: z.string().describe("The unique identifier of the user to replace"),
+  ...userResourceSchema,
+};
+
+export default async function replaceUser(
+  params: InferSchema<typeof schema>
+) {
+  const requestHeaders = headers();
+  const apiToken = requestHeaders["x-scim-api-key"];
+  const baseUrl = requestHeaders["x-scim-base-url"];
+
+  if (!apiToken) {
+    throw new Error("Missing required headers: x-scim-api-key");
+  }
+
+  if (!baseUrl) {
+    throw new Error("Missing required headers: x-scim-base-url");
+  }
+
+  const { userId, ...userResource } = params;
+
+  const response = await fetch(`${baseUrl}/Users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/scim+json",
+      Authorization: `Bearer ${apiToken}`,
+    },
+    body: JSON.stringify(userResource),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: `User ${userId} replaced successfully`,
+      },
+      {
+        type: "resource_link",
+        name: "User resource",
+        uri: `users://${userId}`,
+      },
+    ],
+    structuredContent: await response.json(),
+  };
+}
