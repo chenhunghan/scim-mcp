@@ -1,0 +1,67 @@
+import { type InferSchema, type ToolMetadata } from "xmcp";
+import { headers } from "xmcp/headers";
+import { patchOperationSchema } from "../schemas/patchOperationSchema";
+import { z } from "zod";
+
+export const metadata: ToolMetadata = {
+  name: "patch-user",
+  description: "Partially update a user resource",
+  annotations: {
+    title: "Patch User Resource",
+    readOnlyHint: false,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+  },
+};
+
+export const schema = {
+  userId: z.string().describe("The unique identifier of the user to patch"),
+  ...patchOperationSchema,
+};
+
+export default async function patchUser(
+  params: InferSchema<typeof schema>
+) {
+  const requestHeaders = headers();
+  const apiToken = requestHeaders["x-scim-api-key"];
+  const baseUrl = requestHeaders["x-scim-base-url"];
+
+  if (!apiToken) {
+    throw new Error("Missing required headers: x-scim-api-key");
+  }
+
+  if (!baseUrl) {
+     throw new Error("Missing required headers: x-scim-base-url");
+  }
+
+  const { userId, ...patchOperation } = params;
+
+  const response = await fetch(`${baseUrl}/Users/${userId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/scim+json",
+      Authorization: `Bearer ${apiToken}`,
+    },
+    body: JSON.stringify(patchOperation),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: `User ${userId} patched successfully`,
+      },
+      {
+        type: "resource_link",
+        name: "User resource",
+        uri: `users://${userId}`,
+      },
+    ],
+    structuredContent: await response.json(),
+  };
+}
