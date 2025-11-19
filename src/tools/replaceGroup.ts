@@ -1,0 +1,67 @@
+import { type InferSchema, type ToolMetadata } from "xmcp";
+import { headers } from "xmcp/headers";
+import { groupResourceSchema } from "../schemas/groupResourceSchema";
+import { z } from "zod";
+
+export const metadata: ToolMetadata = {
+  name: "replace-group",
+  description: "Replace a group resource",
+  annotations: {
+    title: "Replace Group Resource",
+    readOnlyHint: false,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+  },
+};
+
+export const schema = {
+  groupId: z.string().describe("The unique identifier of the group to replace"),
+  ...groupResourceSchema,
+};
+
+export default async function replaceGroup(
+  params: InferSchema<typeof schema>
+) {
+  const requestHeaders = headers();
+  const apiToken = requestHeaders["x-scim-api-key"];
+  const baseUrl = requestHeaders["x-scim-base-url"];
+
+  if (!apiToken) {
+    throw new Error("Missing required headers: x-scim-api-key");
+  }
+
+  if (!baseUrl) {
+    throw new Error("Missing required headers: x-scim-base-url");
+  }
+
+  const { groupId, ...groupResource } = params;
+
+  const response = await fetch(`${baseUrl}/Groups/${groupId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/scim+json",
+      Authorization: `Bearer ${apiToken}`,
+    },
+    body: JSON.stringify(groupResource),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: `Group ${groupId} replaced successfully`,
+      },
+      {
+        type: "resource_link",
+        name: "Group resource",
+        uri: `groups://${groupId}`,
+      },
+    ],
+    structuredContent: await response.json(),
+  };
+}
