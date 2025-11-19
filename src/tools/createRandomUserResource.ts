@@ -1,9 +1,10 @@
-import { type ToolMetadata } from "xmcp";
+import { type InferSchema, type ToolMetadata } from "xmcp";
 import { faker } from "@faker-js/faker";
+import { z } from "zod";
 
 export const metadata: ToolMetadata = {
   name: "create-random-user-resource",
-  description: "Generate a realistic SCIM user resource for testing",
+  description: "Generate a realistic SCIM user resource with optional overrides",
   annotations: {
     title: "Create Random User Resource",
     readOnlyHint: true,
@@ -13,23 +14,38 @@ export const metadata: ToolMetadata = {
   },
 };
 
-export const schema = {};
+export const schema = {
+  userName: z.string().optional().describe("Override the generated userName"),
+  firstName: z.string().optional().describe("Override the generated first name"),
+  lastName: z.string().optional().describe("Override the generated last name"),
+  displayName: z.string().optional().describe("Override the generated display name"),
+  email: z.string().optional().describe("Override the generated email"),
+  active: z.boolean().optional().describe("Override the active status (default: true)"),
+  employeeNumber: z.string().optional().describe("Override the generated employee number"),
+  department: z.string().optional().describe("Override the generated department"),
+  organization: z.string().optional().describe("Override the generated organization"),
+};
 
-export default async function createRandomUserResource() {
-  const firstName = faker.person.firstName();
-  const lastName = faker.person.lastName();
-  const email = faker.internet.email({ firstName, lastName }).toLowerCase();
-  const userName = faker.internet.username({ firstName, lastName }).toLowerCase();
+export default async function createRandomUserResource(params: InferSchema<typeof schema>) {
+  const firstName = params.firstName ?? faker.person.firstName();
+  const lastName = params.lastName ?? faker.person.lastName();
+  const email = params.email ?? faker.internet.email({ firstName, lastName }).toLowerCase();
+  const userName = params.userName ?? faker.internet.username({ firstName, lastName }).toLowerCase();
+  const displayName = params.displayName ?? `${firstName} ${lastName}`;
+  const active = params.active ?? true;
+  const employeeNumber = params.employeeNumber ?? faker.string.numeric(6);
+  const department = params.department ?? faker.commerce.department();
+  const organization = params.organization ?? faker.company.name();
 
   const userResource = {
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:User"],
     userName: userName,
     name: {
-      formatted: `${firstName} ${lastName}`,
+      formatted: displayName,
       familyName: lastName,
       givenName: firstName,
     },
-    displayName: `${firstName} ${lastName}`,
+    displayName: displayName,
     emails: [
       {
         value: email,
@@ -37,11 +53,11 @@ export default async function createRandomUserResource() {
         primary: true,
       },
     ],
-    active: true,
+    active: active,
     "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
-      employeeNumber: faker.string.numeric(6),
-      department: faker.commerce.department(),
-      organization: faker.company.name(),
+      employeeNumber: employeeNumber,
+      department: department,
+      organization: organization,
     },
   };
 
