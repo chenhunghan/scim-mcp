@@ -18,27 +18,11 @@ export default async function handler({ userId }: InferSchema<typeof schema>) {
   const baseUrl = requestHeaders["x-scim-base-url"];
 
   if (!apiToken) {
-    return {
-      isError: true,
-      content: [
-        {
-          type: "text",
-          text: "Missing required headers: x-scim-api-key",
-        },
-      ],
-    };
+    throw new Error("Missing required headers: x-scim-api-key");
   }
 
   if (!baseUrl) {
-    return {
-      isError: true,
-      content: [
-        {
-          type: "text",
-          text: "Missing required headers: x-scim-base-url",
-        },
-      ],
-    };
+    throw new Error("Missing required headers: x-scim-base-url");
   }
 
   const response = await fetch(`${baseUrl}/Users/${userId}`, {
@@ -50,28 +34,18 @@ export default async function handler({ userId }: InferSchema<typeof schema>) {
   });
 
   if (!response.ok) {
-    const errorText = `${response.status} ${
-      response.statusText
-    } - ${JSON.stringify(await response.json())}`;
-
-    return {
-      isError: true,
-      content: [
-        {
-          type: "text",
-          text: errorText,
-        },
-      ],
-    };
+    throw new Error(await response.text());
   }
 
+  const data = await response.json();
+
   return {
-    content: [
+    contents: [
       {
-        type: "text",
-        text: `Got one user resource with ID ${userId}`,
+        uri: `users://${userId}`,
+        mimeType: "application/json",
+        text: JSON.stringify(data, null, 2),
       },
     ],
-    structuredContent: await response.json(),
   };
 }
