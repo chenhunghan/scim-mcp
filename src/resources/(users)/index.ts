@@ -9,15 +9,31 @@ export const schema = {
     .describe(
       "SCIM filter expression see 3.4.2.2. Filtering <https://datatracker.ietf.org/doc/html/rfc7644#section-3.4.2.2>"
     ),
+  startIndex: z
+    .number()
+    .optional()
+    .describe(
+      "The 1-based index of the first query result. A value less than 1 SHALL be interpreted as 1."
+    ),
+  count: z
+    .number()
+    .optional()
+    .describe(
+      "Non-negative integer. Specifies the desired maximum number of query results per page."
+    ),
 };
 
 export const metadata: ResourceMetadata = {
   name: "user-resources",
   title: "User Resources",
-  description: "User Resources with optional filtering",
+  description: "User Resources with optional filtering and pagination",
 };
 
-export default async function handler({ filter }: InferSchema<typeof schema>) {
+export default async function handler({
+  filter,
+  startIndex,
+  count,
+}: InferSchema<typeof schema>) {
   const requestHeaders = headers();
   const apiToken = requestHeaders["x-scim-api-key"];
   const baseUrl = requestHeaders["x-scim-base-url"];
@@ -33,7 +49,13 @@ export default async function handler({ filter }: InferSchema<typeof schema>) {
   const url = new URL(`${baseUrl}/Users`);
 
   if (filter) {
-    url.searchParams.append("filter", encodeURIComponent(filter));
+    url.searchParams.append("filter", filter);
+  }
+  if (startIndex !== undefined) {
+    url.searchParams.append("startIndex", startIndex.toString());
+  }
+  if (count !== undefined) {
+    url.searchParams.append("count", count.toString());
   }
   const response = await fetch(url, {
     method: "GET",
