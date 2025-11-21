@@ -1,6 +1,7 @@
 import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { z } from "zod";
+import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
   name: "remove-user-from-group",
@@ -68,6 +69,8 @@ export default async function removeUserFromGroup(
     throw new Error(await response.text());
   }
 
+  const data = await readJsonBody(response);
+
   return {
     content: [
       {
@@ -80,6 +83,6 @@ export default async function removeUserFromGroup(
         uri: `groups://${groupId}`,
       },
     ],
-    structuredContent: await response.json(),
+    structuredContent: data ?? undefined,
   };
 }

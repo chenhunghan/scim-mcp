@@ -2,6 +2,7 @@ import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { patchOperationSchema } from "../schemas/patchOperationSchema";
 import { z } from "zod";
+import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
   name: "patch-group",
@@ -50,6 +51,8 @@ export default async function patchGroup(
     throw new Error(await response.text());
   }
 
+  const data = await readJsonBody(response);
+
   return {
     content: [
       {
@@ -62,6 +65,6 @@ export default async function patchGroup(
         uri: `groups://${groupId}`,
       },
     ],
-    structuredContent: await response.json(),
+    structuredContent: data ?? undefined,
   };
 }

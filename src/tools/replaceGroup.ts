@@ -2,6 +2,7 @@ import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { groupResourceSchema } from "../schemas/groupResourceSchema";
 import { z } from "zod";
+import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
   name: "replace-group",
@@ -50,6 +51,8 @@ export default async function replaceGroup(
     throw new Error(await response.text());
   }
 
+  const data = await readJsonBody(response);
+
   return {
     content: [
       {
@@ -62,6 +65,6 @@ export default async function replaceGroup(
         uri: `groups://${groupId}`,
       },
     ],
-    structuredContent: await response.json(),
+    structuredContent: data ?? undefined,
   };
 }

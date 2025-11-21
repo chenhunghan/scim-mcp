@@ -1,6 +1,7 @@
 import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { z } from "zod";
+import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
   name: "add-user-to-group",
@@ -66,6 +67,8 @@ export default async function addUserToGroup(
     throw new Error(await response.text());
   }
 
+  const data = await readJsonBody(response);
+
   return {
     content: [
       {
@@ -78,6 +81,6 @@ export default async function addUserToGroup(
         uri: `groups://${groupId}`,
       },
     ],
-    structuredContent: await response.json(),
+    structuredContent: data ?? undefined,
   };
 }

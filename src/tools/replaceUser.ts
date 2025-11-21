@@ -2,6 +2,7 @@ import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { userResourceSchema } from "../schemas/userResourceSchema";
 import { z } from "zod";
+import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
   name: "replace-user",
@@ -50,6 +51,8 @@ export default async function replaceUser(
     throw new Error(await response.text());
   }
 
+  const data = await readJsonBody(response);
+
   return {
     content: [
       {
@@ -62,6 +65,6 @@ export default async function replaceUser(
         uri: `users://${userId}`,
       },
     ],
-    structuredContent: await response.json(),
+    structuredContent: data ?? undefined,
   };
 }

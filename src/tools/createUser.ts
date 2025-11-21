@@ -2,6 +2,7 @@ import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { z } from "zod";
 import { userResourceSchema } from "../schemas/userResourceSchema";
+import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
   name: "create-user",
@@ -53,7 +54,7 @@ export default async function createUser(
     throw new Error(await response.text());
   }
 
-  const data = await response.json();
+  const data = await readJsonBody(response);
 
   return {
     content: [
@@ -61,12 +62,16 @@ export default async function createUser(
         type: "text",
         text: `User created successfully`,
       },
-      {
-        type: "resource_link",
-        name: "User resource",
-        uri: `users://${data.id}`,
-      },
+      ...(data?.id
+        ? [
+            {
+              type: "resource_link",
+              name: "User resource",
+              uri: `users://${data.id}`,
+            },
+          ]
+        : []),
     ],
-    structuredContent: data,
+    structuredContent: data ?? undefined,
   };
 }

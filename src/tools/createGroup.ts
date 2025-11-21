@@ -2,6 +2,7 @@ import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { groupResourceSchema } from "../schemas/groupResourceSchema";
 import { z } from "zod";
+import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
   name: "create-group",
@@ -53,7 +54,7 @@ export default async function createGroup(
     throw new Error(await response.text());
   }
 
-  const data = await response.json();
+  const data = await readJsonBody(response);
 
   return {
     content: [
@@ -61,12 +62,16 @@ export default async function createGroup(
         type: "text",
         text: `Group created successfully`,
       },
-      {
-        type: "resource_link",
-        name: "Group resource",
-        uri: `groups://${data.id}`,
-      },
+      ...(data?.id
+        ? [
+            {
+              type: "resource_link",
+              name: "Group resource",
+              uri: `groups://${data.id}`,
+            },
+          ]
+        : []),
     ],
-    structuredContent: data,
+    structuredContent: data ?? undefined,
   };
 }
