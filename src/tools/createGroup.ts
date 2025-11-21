@@ -15,14 +15,19 @@ export const metadata: ToolMetadata = {
   },
 };
 
-export const schema = z.object(groupResourceSchema).omit({
+const createGroupInputSchema = z.object(groupResourceSchema).omit({
   id: true,
   meta: true,
 });
 
+export const schema = {
+  groupResource: createGroupInputSchema,
+};
+
 export default async function createGroup(
-  groupResource: InferSchema<typeof groupResourceSchema>
+  params: InferSchema<typeof schema>
 ) {
+  const { groupResource } = params;
   const requestHeaders = headers();
   const apiToken = requestHeaders["x-scim-api-key"];
   const baseUrl = requestHeaders["x-scim-base-url"];
