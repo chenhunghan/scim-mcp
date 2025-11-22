@@ -4,7 +4,7 @@ emoji: 🌖
 colorFrom: pink
 colorTo: blue
 sdk: gradio
-sdk_version: 6
+sdk_version: 6.0.0
 app_file: app.py
 pinned: false
 short_description: SCIM 2.0 relay for AI agents to manage identities
