@@ -1,6 +1,6 @@
-# SCIM MCP Server
+# SCIM relay for Agents
 
-**scim-mcp** enables LLMs to manage enterprise user identities through SCIM 2.0 ([RFC7644](https://datatracker.ietf.org/doc/html/rfc7644)) without exposing credentials. It acts as a secure relay between AI agents and Idp, allowing organizations to provision, de-provision, and manage users safely.
+**scim-mcp** enables LLMs to manage enterprise user identities through SCIM 2.0 ([RFC7644](https://datatracker.ietf.org/doc/html/rfc7644)) without exposing credentials. It acts as a secure relay between AI agents and Idp, allowing organizations to provision, de-provision, and manage users/groups safely.
 
 ## Features
 
