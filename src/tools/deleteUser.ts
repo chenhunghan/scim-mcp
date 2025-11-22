@@ -2,6 +2,7 @@ import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { z } from "zod";
 import { getScimToken } from "../utils/getSCIMApiKey";
+import { getScimBaseUrl } from "../utils/getSCIMBaseUrl";
 
 export const metadata: ToolMetadata = {
   name: "delete-user",
@@ -24,7 +25,7 @@ export default async function deleteUser(
 ) {
   const requestHeaders = headers();
   const apiToken = getScimToken(requestHeaders);
-  const baseUrl = requestHeaders["x-scim-base-url"];
+  const baseUrl = getScimBaseUrl(requestHeaders);
 
   if (!apiToken) {
     throw new Error("Missing required headers: x-scim-api-key");

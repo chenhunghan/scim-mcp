@@ -2,6 +2,7 @@ import { type InferSchema, type ResourceMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { z } from "zod";
 import { getScimToken } from "../../../utils/getSCIMApiKey";
+import { getScimBaseUrl } from "../../../utils/getSCIMBaseUrl";
 
 export const schema = {
   groupId: z.string().describe("The ID of the group"),
@@ -32,7 +33,7 @@ export default async function handler({
 }: InferSchema<typeof schema>) {
   const requestHeaders = headers();
   const apiToken = getScimToken(requestHeaders);
-  const baseUrl = requestHeaders["x-scim-base-url"];
+  const baseUrl = getScimBaseUrl(requestHeaders);
 
   if (!apiToken) {
     throw new Error("Missing required headers: x-scim-api-key");

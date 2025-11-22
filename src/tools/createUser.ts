@@ -3,6 +3,7 @@ import { headers } from "xmcp/headers";
 import { z } from "zod";
 import { userResourceSchema } from "../schemas/userResourceSchema";
 import { getScimToken } from "../utils/getSCIMApiKey";
+import { getScimBaseUrl } from "../utils/getSCIMBaseUrl";
 import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
@@ -32,7 +33,7 @@ export default async function createUser(
   const { userResource } = params;
   const requestHeaders = headers();
   const apiToken = getScimToken(requestHeaders);
-  const baseUrl = requestHeaders["x-scim-base-url"];
+  const baseUrl = getScimBaseUrl(requestHeaders);
 
   if (!apiToken) {
     throw new Error("Missing required headers: x-scim-api-key");
