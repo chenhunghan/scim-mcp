@@ -87,10 +87,7 @@ demo = gr.ChatInterface(
         "Create a user named John Doe with email john.doe@example.com",
         "What SCIM tools do you have access to?",
         "Show me user information for user ID 12345"
-    ],
-    retry_btn=True,
-    undo_btn=True,
-    clear_btn=True
+    ]
 )
 
 if __name__ == "__main__":
