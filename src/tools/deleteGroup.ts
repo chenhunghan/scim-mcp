@@ -1,6 +1,7 @@
 import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { z } from "zod";
+import { getScimToken } from "../utils/getSCIMApiKey";
 
 export const metadata: ToolMetadata = {
   name: "delete-group",
@@ -22,7 +23,7 @@ export default async function deleteGroup(
   params: InferSchema<typeof schema>
 ) {
   const requestHeaders = headers();
-  const apiToken = requestHeaders["x-scim-api-key"];
+  const apiToken = getScimToken(requestHeaders);
   const baseUrl = requestHeaders["x-scim-base-url"];
 
   if (!apiToken) {

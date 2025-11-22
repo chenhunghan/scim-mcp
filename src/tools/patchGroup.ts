@@ -1,7 +1,8 @@
 import { type InferSchema, type ToolMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
-import { patchOperationSchema } from "../schemas/patchOperationSchema";
 import { z } from "zod";
+import { patchOperationSchema } from "../schemas/patchOperationSchema";
+import { getScimToken } from "../utils/getSCIMApiKey";
 import { readJsonBody } from "../utils/responseBody";
 
 export const metadata: ToolMetadata = {
@@ -25,7 +26,7 @@ export default async function patchGroup(
   params: InferSchema<typeof schema>
 ) {
   const requestHeaders = headers();
-  const apiToken = requestHeaders["x-scim-api-key"];
+  const apiToken = getScimToken(requestHeaders);
   const baseUrl = requestHeaders["x-scim-base-url"];
 
   if (!apiToken) {
