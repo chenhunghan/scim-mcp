@@ -1,6 +1,31 @@
 # SCIM MCP Server
 
-Model Context Protocol (MCP) server for enterprise-ready user and group provisioning via SCIM (System for Cross-domain Identity Management) V2 protocol.
+**scim-mcp** enables LLMs to manage enterprise user identities through SCIM 2.0 ([RFC7644](https://datatracker.ietf.org/doc/html/rfc7644)) without exposing credentials. It acts as a secure relay between AI agents and Idp, allowing organizations to provision, de-provision, and manage users safely.
+
+## Features
+
+Full SCIM 2.0 user and group lifecycle management:
+
+**User Operations:**
+- **POST** - Create users with core and enterprise schema attributes ([RFC7644 §3.3](https://datatracker.ietf.org/doc/html/rfc7644#section-3.3))
+- **GET** - Retrieve user information ([RFC7644 §3.4.1](https://datatracker.ietf.org/doc/html/rfc7644#section-3.4.1))
+- **PUT** - Replace user records entirely ([RFC7644 §3.5.1](https://datatracker.ietf.org/doc/html/rfc7644#section-3.5.1))
+- **PATCH** - Update specific user attributes ([RFC7644 §3.5.2](https://datatracker.ietf.org/doc/html/rfc7644#section-3.5.2))
+- **DELETE** - Remove users ([RFC7644 §3.6](https://datatracker.ietf.org/doc/html/rfc7644#section-3.6))
+- **Deactivation** - Disable user accounts by setting `active: false`
+
+**Group Operations:**
+- **POST** - Create groups ([RFC7644 §3.3](https://datatracker.ietf.org/doc/html/rfc7644#section-3.3))
+- **GET** - Retrieve group information ([RFC7644 §3.4.1](https://datatracker.ietf.org/doc/html/rfc7644#section-3.4.1))
+- **PUT** - Replace group records entirely ([RFC7644 §3.5.1](https://datatracker.ietf.org/doc/html/rfc7644#section-3.5.1))
+- **PATCH** - **Add/remove users to/from groups for authorization management** ([RFC7644 §3.5.2](https://datatracker.ietf.org/doc/html/rfc7644#section-3.5.2))
+- **DELETE** - Remove groups ([RFC7644 §3.6](https://datatracker.ietf.org/doc/html/rfc7644#section-3.6))
+
+## Use Cases
+
+1. **Connect Enterprise App Directly** - Manage users and groups directly in your service provider without Azure AD, Okta, or other IdP interfaces
+2. **SCIM Endpoint Development & Testing** - Validate your SCIM endpoint implementation without setting up Azure AD or Okta
+3. **Control MCP Server Access** - Use Auth0's [inbound SCIM connector](https://auth0.com/docs/authenticate/protocols/scim/configure-inbound-scim#leverage-integration-galleries-for-streamlined-setup) to manage which OAuth accounts can access which MCP servers
 
 ## Demo
 
