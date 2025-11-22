@@ -7,7 +7,7 @@ sdk: gradio
 sdk_version: 5.49.1
 app_file: app.py
 pinned: false
-short_description: scim-mcp is a MCP server enables LLMs to manage enterprise user identities and groups through the battle-tested SCIM 2.0 standard
+short_description: a MCP server to manage enterprise user identities and groups through SCIM 2.0
 tags:
   - building-mcp-track-enterprise
 ---
