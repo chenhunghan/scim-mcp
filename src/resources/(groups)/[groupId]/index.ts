@@ -1,8 +1,8 @@
 import { type InferSchema, type ResourceMetadata } from "xmcp";
 import { headers } from "xmcp/headers";
 import { z } from "zod";
-import { getScimToken } from "../../../utils/getSCIMApiKey";
 import { getScimBaseUrl } from "../../../utils/getSCIMBaseUrl";
+import { getScimToken } from "../../../utils/getSCIMToken";
 
 export const schema = {
   groupId: z.string().describe("The ID of the group"),
