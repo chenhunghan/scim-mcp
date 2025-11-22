@@ -31,7 +31,7 @@ export default async function patchUser(
   const baseUrl = getScimBaseUrl(requestHeaders);
 
   if (!apiToken) {
-    throw new Error("Missing required headers: x-scim-api-key");
+    throw new Error("Missing required headers: x-scim-api-token");
   }
 
   if (!baseUrl) {

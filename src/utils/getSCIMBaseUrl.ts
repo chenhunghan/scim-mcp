@@ -6,7 +6,7 @@ export function getScimBaseUrl(headers: Headers): string {
   if (process.env.SCIM_API_BASE_URL) {
     baseUrl = process.env.SCIM_API_BASE_URL;
   }
-  const baseUrlFromHeader = headers["x-scim-base-url"] || headers["X-SCIM-BASE-URL"];
+  const baseUrlFromHeader = headers["x-scim-base-url"];
   if (typeof baseUrlFromHeader === "string") {
     baseUrl = baseUrlFromHeader.trim();
   }

@@ -19,7 +19,7 @@ On Alpic
 ```toml
 [mcp_servers.scim]
 command = "npx"
-args = ["-y", "mcp-remote@latest", "https://scim-mcp-d8a54d7b.alpic.live/", "--header", "x-scim-api-key:${SCIM_AUTH_TOKEN}", "--header", "x-scim-base-url:https://service.provider.scim.base.url"]
+args = ["-y", "mcp-remote@latest", "https://scim-mcp-d8a54d7b.alpic.live/", "--header", "x-scim-api-token:${SCIM_AUTH_TOKEN}", "--header", "x-scim-base-url:https://service.provider.scim.base.url"]
 ```
 
 ## Development

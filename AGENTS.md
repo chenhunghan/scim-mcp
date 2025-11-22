@@ -50,7 +50,7 @@ Creates a SCIM user resource by sending a POST request to the SCIM provider's `/
 
 **Required Headers**:
 
-- `x-scim-api-key`: Bearer token for SCIM API authentication
+- `x-scim-api-token`: Bearer token for SCIM API authentication
 - `x-scim-base-url`: Base URL of the SCIM provider
 
 **Parameters**: Full SCIM User resource including:
@@ -142,7 +142,7 @@ Required for SCIM operations:
 
 - Headers passed per-request (no env vars needed for auth)
 - SCIM credentials provided via HTTP headers:
-  - `x-scim-api-key`: API token/bearer token
+  - `x-scim-api-token`: API token/bearer token
   - `x-scim-base-url`: SCIM provider base URL
 
 ## Development Workflow

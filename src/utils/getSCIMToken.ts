@@ -8,7 +8,7 @@ export function getScimToken(headers: Headers): string {
   if (process.env.SCIM_API_TOKEN) {
     token = process.env.SCIM_API_TOKEN;
   }
-  const tokenFromHeader = headers["x-scim-api-key"] || headers["X-SCIM-API-KEY"];
+  const tokenFromHeader = headers["x-scim-api-token"];
   if (typeof tokenFromHeader === "string") {
     token = tokenFromHeader.trim();
   }
