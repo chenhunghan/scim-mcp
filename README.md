@@ -2,28 +2,6 @@
 
 **scim-mcp** enables LLMs to manage enterprise user identities through SCIM 2.0 ([RFC7644](https://datatracker.ietf.org/doc/html/rfc7644)) without exposing credentials. It acts as a secure relay between AI agents and Idp, allowing organizations to provision, de-provision, and manage users safely.
 
-## Architecture
-
-```mermaid
-sequenceDiagram
-    participant LLM as LLM/AI Agent
-    participant MCP as scim-mcp<br/>(MCP Server)
-    participant SP as Service Provider<br/>(SCIM Endpoint)
-    
-    Note over MCP: Credentials stored as<br/>environment variables:<br/>SCIM_API_TOKEN<br/>SCIM_API_BASE_URL
-    
-    LLM->>MCP: MCP Tool Request<br/>(e.g., create-user)
-    Note over LLM,MCP: No credentials exposed to LLM
-    
-    MCP->>MCP: Retrieve credentials<br/>from environment
-    
-    MCP->>SP: SCIM API Request<br/>Authorization: Bearer {token}
-    
-    SP->>MCP: SCIM Response
-    
-    MCP->>LLM: MCP Tool Response
-```
-
 ## Features
 
 Full SCIM 2.0 user and group lifecycle management:
@@ -58,6 +36,28 @@ On Alpic
 <https://scim-mcp-d8a54d7b.alpic.live/>
 
 [![Deploy on Alpic](https://assets.alpic.ai/button.svg)](https://app.alpic.ai/new/clone?repositoryUrl=https://github.com/chenhunghan/scim-mcp)
+
+## Architecture
+
+```mermaid
+sequenceDiagram
+    participant LLM as LLM/AI Agent
+    participant MCP as scim-mcp<br/>(MCP Server)
+    participant SP as Service Provider<br/>(SCIM Endpoint)
+    
+    Note over MCP: Credentials stored as<br/>environment variables:<br/>SCIM_API_TOKEN<br/>SCIM_API_BASE_URL
+    
+    LLM->>MCP: MCP Tool Request<br/>(e.g., create-user)
+    Note over LLM,MCP: No credentials exposed to LLM
+    
+    MCP->>MCP: Retrieve credentials<br/>from environment
+    
+    MCP->>SP: SCIM API Request<br/>Authorization: Bearer {token}
+    
+    SP->>MCP: SCIM Response
+    
+    MCP->>LLM: MCP Tool Response
+```
 
 ## Setup
 
