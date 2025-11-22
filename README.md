@@ -7,7 +7,7 @@ sdk: gradio
 sdk_version: 5.49.1
 app_file: app.py
 pinned: false
-short_description: MCP server to manage enterprise user identities through SCIM 2.0
+short_description: SCIM 2.0 relay for AI agents to manage identities
 tags:
   - building-mcp-track-enterprise
 ---
