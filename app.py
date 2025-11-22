@@ -88,9 +88,9 @@ demo = gr.ChatInterface(
         "What SCIM tools do you have access to?",
         "Show me user information for user ID 12345"
     ],
-    retry_btn="Retry",
-    undo_btn="Undo",
-    clear_btn="Clear"
+    retry_btn=True,
+    undo_btn=True,
+    clear_btn=True
 )
 
 if __name__ == "__main__":
