@@ -10,9 +10,9 @@ tags:
   - building-mcp-track-enterprise
 ---
 
-# SCIM (System for Cross-domain Identity Management) Relay for Agents
+# SCIM Relay for Agents
 
-**scim-mcp** is a SCIM relay for AI agents. This MCP server enables LLMs to manage enterprise user identities and groups through the battle-tested SCIM 2.0 standard ([RFC7644](https://datatracker.ietf.org/doc/html/rfc7644)). It acts as a secure relay between AI agents and service providers (SP) or identity providers (IdP), allowing organizations to provision, de-provision, and manage authorization policies safely.
+**scim-mcp** is a SCIM (System for Cross-domain Identity Management) relay for AI agents. This MCP server enables LLMs to manage enterprise user identities and groups through the battle-tested SCIM 2.0 standard ([RFC7644](https://datatracker.ietf.org/doc/html/rfc7644)). It acts as a secure relay between AI agents and service providers (SP) or identity providers (IdP), allowing organizations to provision, de-provision, and manage authorization policies safely.
 
 ## Features
 
