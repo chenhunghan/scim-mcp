@@ -61,11 +61,6 @@ export default async function replaceUser(
         type: "text",
         text: `User ${userId} replaced successfully`,
       },
-      {
-        type: "resource_link",
-        name: "User resource",
-        uri: `users://${userId}`,
-      },
     ],
     structuredContent: data ?? undefined,
   };

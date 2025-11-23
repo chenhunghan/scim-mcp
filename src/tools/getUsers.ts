@@ -146,11 +146,6 @@ export default async function getUsers(params: InferSchema<typeof schema>) {
         type: "text",
         text: `Get users successfully`,
       },
-      {
-        type: "resource_link",
-        name: "User resources",
-        uri: "users://",
-      },
     ],
     structuredContent: data ?? undefined,
   };

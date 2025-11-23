@@ -64,15 +64,6 @@ export default async function createUser(
         type: "text",
         text: `User created successfully`,
       },
-      ...(data?.id
-        ? [
-            {
-              type: "resource_link",
-              name: "User resource",
-              uri: `users://${data.id}`,
-            },
-          ]
-        : []),
     ],
     structuredContent: data ?? undefined,
   };

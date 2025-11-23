@@ -77,11 +77,6 @@ export default async function addUserToGroup(
         type: "text",
         text: `User ${userId} added to group ${groupId} successfully`,
       },
-      {
-        type: "resource_link",
-        name: "Group resource",
-        uri: `groups://${groupId}`,
-      },
     ],
     structuredContent: data ?? undefined,
   };

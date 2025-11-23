@@ -64,15 +64,6 @@ export default async function createGroup(
         type: "text",
         text: `Group created successfully`,
       },
-      ...(data?.id
-        ? [
-            {
-              type: "resource_link",
-              name: "Group resource",
-              uri: `groups://${data.id}`,
-            },
-          ]
-        : []),
     ],
     structuredContent: data ?? undefined,
   };

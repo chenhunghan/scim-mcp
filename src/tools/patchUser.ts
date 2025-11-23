@@ -61,11 +61,6 @@ export default async function patchUser(
         type: "text",
         text: `User ${userId} patched successfully`,
       },
-      {
-        type: "resource_link",
-        name: "User resource",
-        uri: `users://${userId}`,
-      },
     ],
     structuredContent: data ?? undefined,
   };

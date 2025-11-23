@@ -103,11 +103,6 @@ export default async function getOneUser(params: InferSchema<typeof schema>) {
         type: "text",
         text: `Get one user successfully`,
       },
-      {
-        type: "resource_link",
-        name: "User resource",
-        uri: `users://${userId}`,
-      },
     ],
     structuredContent: data ?? undefined,
   };

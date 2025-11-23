@@ -79,11 +79,6 @@ export default async function removeUserFromGroup(
         type: "text",
         text: `User ${userId} removed from group ${groupId} successfully`,
       },
-      {
-        type: "resource_link",
-        name: "Group resource",
-        uri: `groups://${groupId}`,
-      },
     ],
     structuredContent: data ?? undefined,
   };

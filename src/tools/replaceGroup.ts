@@ -61,11 +61,6 @@ export default async function replaceGroup(
         type: "text",
         text: `Group ${groupId} replaced successfully`,
       },
-      {
-        type: "resource_link",
-        name: "Group resource",
-        uri: `groups://${groupId}`,
-      },
     ],
     structuredContent: data ?? undefined,
   };

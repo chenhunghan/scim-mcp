@@ -103,11 +103,6 @@ export default async function getOneGroup(params: InferSchema<typeof schema>) {
         type: "text",
         text: `Get one group successfully`,
       },
-      {
-        type: "resource_link",
-        name: "Group resource",
-        uri: `groups://${groupId}`,
-      },
     ],
     structuredContent: data ?? undefined,
   };

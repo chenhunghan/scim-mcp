@@ -61,11 +61,6 @@ export default async function patchGroup(
         type: "text",
         text: `Group ${groupId} patched successfully`,
       },
-      {
-        type: "resource_link",
-        name: "Group resource",
-        uri: `groups://${groupId}`,
-      },
     ],
     structuredContent: data ?? undefined,
   };
