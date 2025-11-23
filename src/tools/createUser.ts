@@ -36,11 +36,11 @@ export default async function createUser(
   const baseUrl = getScimBaseUrl(requestHeaders);
 
   if (!apiToken) {
-    throw new Error("Missing required headers: x-scim-api-token");
+    throw new Error("Missing required headers: x-scim-api-token or SCIM_API_TOKEN env");
   }
 
   if (!baseUrl) {
-    throw new Error("Missing required headers: x-scim-base-url");
+    throw new Error("Missing required headers: x-scim-base-url or SCIM_API_BASE_URL env");
   }
 
   const response = await fetch(`${baseUrl}/Users`, {
