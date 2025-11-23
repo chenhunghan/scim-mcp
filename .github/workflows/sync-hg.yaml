@@ -17,3 +17,7 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: git push https://chenhunghan:$HF_TOKEN@huggingface.co/spaces/chenhunghan/scim-mcp main
+      - name: Push to huggingface
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: git push https://chenhunghan:$HF_TOKEN@huggingface.co/spaces/MCP-1st-Birthday/scim-mcp main
