@@ -20,6 +20,11 @@ export const userResourceSchema = {
     .describe(
       "A unique identifier for a SCIM resource as defined by the service provider"
     ),
+  externalId: z.string()
+    .optional()
+    .describe(
+      "A String that is an identifier for the resource as defined by the provisioning client."
+    ),
   meta: z
     .object({
       resourceType: z.string().optional(),
