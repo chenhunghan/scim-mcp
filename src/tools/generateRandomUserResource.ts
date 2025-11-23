@@ -1,12 +1,12 @@
-import { type InferSchema, type ToolMetadata } from "xmcp";
 import { faker } from "@faker-js/faker";
+import { type InferSchema, type ToolMetadata } from "xmcp";
 import { z } from "zod";
 
 export const metadata: ToolMetadata = {
-  name: "create-random-user-resource",
-  description: "Generate a realistic SCIM user resource with optional overrides",
+  name: "generate-one-random-user-resource",
+  description: "Generate a realistic SCIM user resource with optional overrides, does not create the user in the system,use with create-user tool to provision the user",
   annotations: {
-    title: "Create Random User Resource",
+    title: "Generate Random User Resource",
     readOnlyHint: true,
     destructiveHint: false,
     idempotentHint: false,
@@ -26,7 +26,7 @@ export const schema = {
   organization: z.string().optional().describe("Override the generated organization"),
 };
 
-export default async function createRandomUserResource(params: InferSchema<typeof schema>) {
+export default async function generateRandomUserResource(params: InferSchema<typeof schema>) {
   const firstName = params.firstName ?? faker.person.firstName();
   const lastName = params.lastName ?? faker.person.lastName();
   const email = params.email ?? faker.internet.email({ firstName, lastName }).toLowerCase();
