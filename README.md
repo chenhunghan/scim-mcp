@@ -3,9 +3,7 @@ title: System for Cross-domain Identity Management (SCIM) MCP Server
 emoji: 🌖
 colorFrom: pink
 colorTo: blue
-sdk: gradio
-sdk_version: 6.0.0
-app_file: app.py
+sdk: static
 pinned: false
 short_description: SCIM 2.0 relay for AI agents to manage identities
 tags:
