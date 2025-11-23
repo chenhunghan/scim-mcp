@@ -16,7 +16,10 @@ tags:
 
 ## Features
 
-Full SCIM 2.0 user and group lifecycle management:
+Full SCIM 2.0 user and group lifecycle management with **built-in PII masking** for GDPR/privacy compliance:
+
+**Privacy & Compliance:**
+- **PII Masking** - Automatically masks sensitive personal data (emails, phone numbers, names, addresses) in LLM responses to minimize PII exposure while maintaining operational utility. Critical for GDPR Article 5 (data minimization) and Article 25 (privacy by design) compliance when AI agents process identity data.
 
 **User Operations:**
 - **POST** - Create users with core and enterprise schema attributes ([RFC7644 §3.3](https://datatracker.ietf.org/doc/html/rfc7644#section-3.3))
