@@ -3,6 +3,7 @@ import { headers } from "xmcp/headers";
 import { z } from "zod";
 import { getScimBaseUrl } from "../../utils/getSCIMBaseUrl";
 import { getScimToken } from "../../utils/getSCIMToken";
+import { maskPII, PII_FIELDS } from "../../utils/piiMasking";
 
 export const schema = {
   filter: z
@@ -23,6 +24,13 @@ export const schema = {
     .describe(
       "Non-negative integer. Specifies the desired maximum number of query results per page."
     ),
+  piiMasking: z
+    .boolean()
+    .optional()
+    .default(true)
+    .describe(
+      "Enable PII masking for sensitive fields (username, emails, phone numbers, addresses). When true, values are partially masked while maintaining readability. Also know as privacy mode. Default: true"
+    ),
 };
 
 export const metadata: ResourceMetadata = {
@@ -35,6 +43,7 @@ export default async function handler({
   filter,
   startIndex,
   count,
+  piiMasking = true,
 }: InferSchema<typeof schema>) {
   const requestHeaders = headers();
   const apiToken = getScimToken(requestHeaders);
@@ -71,7 +80,12 @@ export default async function handler({
     throw new Error(await response.text());
   }
 
-  const data = await response.json();
+  let data = await response.json();
+
+  // Apply PII masking if enabled
+  if (piiMasking) {
+    data = maskPII(data, PII_FIELDS);
+  }
 
   return {
     contents: [
