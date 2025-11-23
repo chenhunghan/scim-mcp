@@ -40,6 +40,7 @@ export default async function generateRandomUserResource(params: InferSchema<typ
   const userResource = {
     schemas: ["urn:ietf:params:scim:schemas:core:2.0:User"],
     userName: userName,
+    externalId: faker.string.uuid(),
     name: {
       formatted: displayName,
       familyName: lastName,
