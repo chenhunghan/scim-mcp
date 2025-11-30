@@ -7,6 +7,7 @@ export default defineConfig({
     outDir: 'dist',
   },
   preview: {
+    host: true,
     allowedHosts: ['*'],
   },
 });
