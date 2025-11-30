@@ -5,8 +5,8 @@ FROM node:20-slim
 # Check if user already exists, if not create it
 RUN id -u 1000 &>/dev/null || useradd -m -u 1000 user
 
-# Switch to the "user" user
-USER user
+# Switch to user ID 1000
+USER 1000
 
 # Set home to the user's home directory
 ENV HOME=/home/user \
@@ -15,14 +15,14 @@ ENV HOME=/home/user \
 # Set the working directory to the user's home directory
 WORKDIR $HOME/app
 
-# Copy demo package files with correct ownership
-COPY --chown=user demo/package*.json ./
+# Copy demo package files with correct ownership (use numeric UID)
+COPY --chown=1000:1000 demo/package*.json ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy the demo application with correct ownership
-COPY --chown=user demo/ .
+# Copy the demo application with correct ownership (use numeric UID)
+COPY --chown=1000:1000 demo/ .
 
 # Build the application
 RUN npm run build
