@@ -6,8 +6,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
   },
+  server: {
+    host: true,
+  },
   preview: {
     host: true,
-    allowedHosts: ['*'],
+    strictPort: false,
+    allowedHosts: true,
   },
 });

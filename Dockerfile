@@ -31,4 +31,5 @@ RUN npm run build
 EXPOSE 7860
 
 # Run the preview server on port 7860
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "7860"]
+# Use sh -c to set VITE environment variable to allow all hosts
+CMD ["sh", "-c", "VITE_ALLOWED_HOSTS='*' npm run preview -- --host 0.0.0.0 --port 7860"]
