@@ -3,7 +3,8 @@ title: System for Cross-domain Identity Management (SCIM) MCP Server
 emoji: 🌖
 colorFrom: pink
 colorTo: blue
-sdk: static
+sdk: docker
+app_port: 7860
 pinned: false
 short_description: SCIM 2.0 relay for AI agents to manage identities
 tags:
