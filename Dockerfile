@@ -2,7 +2,8 @@
 FROM node:20-slim
 
 # Set up a new user named "user" with user ID 1000
-RUN useradd -m -u 1000 user
+# Check if user already exists, if not create it
+RUN id -u 1000 &>/dev/null || useradd -m -u 1000 user
 
 # Switch to the "user" user
 USER user
